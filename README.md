@@ -1,3 +1,3 @@
 # Webinara IDA
 
-## Plot i R
+## Introduktion til datavisualisering i R med ggplot2
