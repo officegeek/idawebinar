@@ -1,2 +1,3 @@
-# idawebinar
-Webinar IDA
+# Webinara IDA
+
+## Plot i R
