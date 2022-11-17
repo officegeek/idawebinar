@@ -20,8 +20,16 @@ at du kan bygge alle plot ud fra de samme 7 lag:
 - Aesthetics
 - Data
 
+ggplot (data = <DATA>) +
+    <GEOM_FUNCTION> (mapping = aes(<MAPPINGS>), 
+    stat = <STAT> , position = <POSITION>) + 
+    <COORDINATE_FUNCTION> +
+    <FACET_FUNCTION> +
+    <SCALE_FUNCTION> +
+    <THEME_FUNCTION>
+
 # Data
-Link til data
+[Link til data](./data.md)
 
 # RStudio
 Jeg brugere RStudio som IDE, *du kan godt bruge andre IDE'er*
@@ -32,6 +40,8 @@ Du kan hente den nyeste version her - [cran.rstudio.com](https://cran.rstudio.co
 
 ## Online RStudio
 Det er også muligt at bruge RStude i en online version, se mere her - [https://rstudio.cloud](https://rstudio.cloud)
+
+Der findes både **gratis** og betaling planer.
 
 # Slides
 Link til mine slides - 

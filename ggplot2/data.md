@@ -1,16 +1,23 @@
 # Hent data
-R kommer med 
+R kommer med +100 installerede dataset som du kan bruge til at øve dig på.
 
+Du henter 
 
+## Se mere her 
+- [Documentation for package "datasets"](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html)
 
 # airquality: New York Air Quality Measurements
-Datasættet består af 5 kolonner og 153 rækker
+Datasættet består af 6 kolonner og 153 rækker
 
-- [,1]	Ozone	numeric	Ozone (ppb)
-- [,2]	Solar.R	numeric	Solar R (lang)
-- [,3]	Wind	numeric	Wind (mph)
-- [,4]	Temp	numeric	Temperature (degrees F)
-- [,5]	Month	numeric	Month (1-12)
+| Navn    | Datatype | Beskrivelse               |
+|---------|----------|---------------------------|
+| Ozone   | int      | Ozone (ppb)               |
+| Solar.R | int      | Solar                     |
+| Wind    | num      | Vind hastighed (mph)      |
+| Temp    | int      | Temperatur i Fahrenheit   |
+| Month   | int      | Måneder vist som 1 til 12  |
+| Day     | int      | Dage vist som 1 til 31    |
+
 
 Data er opsamlet i perioden 1. maj 1973 til 30. september 1973.
 
@@ -19,6 +26,9 @@ Data er opsamlet i perioden 1. maj 1973 til 30. september 1973.
 - **Wind**: Gennemsnitlig vindhastighed i miles i timen mellem klokken 07:00 og 10:00 i LaGuardia Lufthavn
 - **Temp**: Maksimal daglig temperatur i grader Fahrenheit i La Guardia Lufthavn
 - **Month**: Måneder som tal 1 til 12
+- **Day**: Dage som tal 1 til 31
+
+
 
 ## Se mere her 
 - [rdocumentation.org - airquality](https://www.rdocumentation.org/packages/datasets/versions/3.6.2/topics/airquality)
