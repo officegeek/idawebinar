@@ -38,6 +38,8 @@ Du indlæser datasættet **airquality** med denne R kode:
 ```r
 ggplot(data = airquality)
 ```
+## Tilpasning af data
+Der skal fortages nogle tilpasninger af data
 
 ![](.//_image/plot_data.jpg)
 
@@ -147,7 +149,7 @@ ggplot(data = airquality,
   geom_point()
 ```
 
-# Facet layer
+# 4. Facet layer
 
 ```r
 p <- ggplot(data = airquality, 
@@ -169,7 +171,12 @@ p + facet_grid(Month ~ .)
 p + facet_grid(. ~ Weekday)
 ```
 
-# Statistics
+# 5. Statistics
+
+
+# 6. Theme
+
+
 
 
 
