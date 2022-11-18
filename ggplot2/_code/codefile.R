@@ -25,15 +25,14 @@ airquality$Month <- factor(airquality$Month)
 # Konverter dato(dag nr.) til ugedag
 airquality$Weekday <- c(wday(paste(airquality$Day, airquality$Month, '1973', sep='-'), label=TRUE, abbr=FALSE))
 
+# Konverter dato til månedsnavn
+airquality$Monthname <- c(month(paste(airquality$Day, airquality$Month, '1973', sep='-'), label=TRUE, abbr=FALSE))
+
 # NA
 # Vi skal have fjernet NA værdier
 # na.omit bruges til at fjerne rows med en eller flere NA værdier
 airquality <- na.omit(airquality)
 
-
-# Packages
-install.packages("ggplot2")
-library(ggplot2)
 
 # Data Layer
 ggplot(data = airquality)
@@ -51,26 +50,26 @@ ggplot(data = airquality,
 # Color
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = Month)) + 
+           col = MonthName)) + 
   geom_point()
 
 # Size
 ggplot(data = airquality, 
     aes(x = Ozone, y = Temp, 
-        size = Month)) + 
+        size = MonthName)) + 
   geom_point()
 
 # Shape og Color
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = Month, 
+           col = MonthName, 
            shape = Month)) + 
   geom_point()
 
 # Shape, Color og Size
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = Month,
+           col = MonthName,
            size = Wind, 
            shape = Month)) + 
   geom_point()
@@ -83,12 +82,12 @@ ggplot(data = airquality,
 # Facet layer
 p <- ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = Month,
+           col = MonthName,
            shape = Month)) + 
   geom_point()
 
 # Opdel i rækker efter Måned (Month)
-p + facet_grid(Month ~ .)
+p + facet_grid(MonthName ~ .)
 
 # Opdel i koloner efter Ugedag (Weekday)
 p + facet_grid(. ~ Weekday)
@@ -98,14 +97,14 @@ p + facet_grid(. ~ Weekday)
 # Statistics layer
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = Month)) +
+           col = MonthName)) +
   geom_point() +
   geom_smooth(se = T, method = lm)
 
 
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = Month)) +
+           col = MonthName)) +
   geom_point() +
   geom_smooth(se = T, method = lm, col = 'red')
 
@@ -113,7 +112,7 @@ ggplot(data = airquality,
 # coord_cartesian() - xlim =
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = Month)) +
+           col = MonthName)) +
   geom_point() +
   geom_smooth(se = F) +
   coord_cartesian(xlim = c(10, 20))
@@ -123,7 +122,7 @@ ggplot(data = airquality,
 # Theme layer
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = Month)) + 
+           col = MonthName)) + 
   geom_point() + 
   geom_smooth(se = F, method = lm) +
   theme(plot.background = element_rect(fill = 'lightblue'))
