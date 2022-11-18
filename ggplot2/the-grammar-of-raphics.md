@@ -1,7 +1,7 @@
 # The Grammar of Graphics
 Opret et plot i **ggplot2** i forhold til de 7 lag i "*The Grammar of Graphics*"
 
-# Data Layer
+# 1. Data Layer
 I **datalaget** definerer du det data der skal bruges til oprettelsen af dit plot.
 
 Til dette plot er det et af de *indbyggede* datasæt vi brugere - **airquality**
@@ -24,15 +24,35 @@ Du indlæser datasættet **airquality** med denne R kode:
 ```r
 ggplot(data = airquality)
 ```
+## Tilpasning af data
+Der skal fortages nogle tilpasninger af data
 
-# Aesthetic Layer
+- Month skal konverteres til enFactor
+- Der skal oprettes en ny kolonne der indeholder **ugedag**(*Weekday*)
+- Tomme/Manglende (NA) værdier skal fjernes
+
+### Month - Factor
+Vi skal have konverteret kolonnen **Month** til en *Factor*
+
+```r
+airquality$Month <- factor(airquality$Month)
+```
+
+### Ugedag
+Datasættet indeholder en **dag** (*1 til 31*) og en **måned** (*1-12*), vi ved at alle data er opsamlet i 1973. Ud fra de oplysninger opretter vi en ny kolonne - **Weekday**.
+
+```r
+airquality$Weekday <- c(wday(paste(airquality$Day, airquality$Month, '1973', sep='-'), label=TRUE, abbr=FALSE))
+```
+![](./_image/data_tilpasset.jpg)
+# 2. Aesthetic Layer
 
 ```r
 ggplot(data = airquality,
     aes(x = Temp, y = Ozone, col = Temp))
 ```
 
-# Geometric layer
+# 3. Geometric layer
 
 ```r
 ggplot(data = airquality, 
@@ -79,7 +99,7 @@ ggplot(data = airquality,
   geom_point()
 ```
 
-# Facet layer
+# 4. Facet layer
 
 ```r
 p <- ggplot(data = airquality, 
@@ -101,7 +121,12 @@ p + facet_grid(Month ~ .)
 p + facet_grid(. ~ Weekday)
 ```
 
-# Statistics
+# 5. Statistics
+
+
+# 6. Theme
+
+
 
 
 
