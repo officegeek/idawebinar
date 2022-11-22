@@ -48,6 +48,7 @@ Typisk kan data ikke bruges i den form du importere dem, hvilket også gælder h
 
 - Konverter **Month** til en *Factor*
 - Tilføj en kolonne med ugedag (*weekday*)
+- Tilføj en kolonne med månedsnavn (*Monthname*)
 - Fjern tomme værdier (*NA*)
 
 ### Factor - Month
@@ -80,6 +81,21 @@ Det jeg gør er følgende:
 - Tilføj en ny kolonne - **Weekday** - *airquality$Weekday*
 - Henter felterne **Day** og **Month** og sætter dem sammen med året **1973**, imellem de tre felter indsætter jeg **sep = '-'** - *paste(airquality$Day, airquality$Month, '1973', sep='-')*
 - Finder **Weekday** ud fra den dato jeg lige har *skabt*. Til det bruger jeg pakken **lubridate** og kommandoen **wday**
+
+### Tilføj månedsnavn
+Den nemmeste måde at få måneds-navnet ud fra et måneds-nummer i R er ved at bruge en af de indbyggede funktioner.
+
+```r
+airquality$Monthname <- month.abb[airquality$Month]
+```
+
+**month.name** giver dig det fulde måneds-navn, **month.abb** giver dig tre-bogstavsforkortelsen får måneden, begge på engelsk.
+
+Hvis du ønsker at få resultater på et andet sprog, skal du ændre:
+
+```r
+Sys.setlocale("LC_TIME", "Danish")
+```
 
 ### Fjern NA værdier
 I datasættet er der en del NA værdier, den skal vi have fjernet. Det kan du nemt gøre med denne R kommando

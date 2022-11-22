@@ -13,7 +13,7 @@ På dette webinar får du en introduktion til, hvordan du kan komme i gang med a
 **ggplot2** er baseret på **Grammar of Graphics**, ideen
 er at du kan bygge alle plot ud fra de 7 lag:
 
-![](./_image/the-grammar-of-graphics.jpg)
+![](./_image/7%20layers-01.jpg)
 
 - Theme
 - Coordinates

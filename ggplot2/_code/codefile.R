@@ -10,6 +10,12 @@ library(lubridate)
 
 # ******************************************************************************
 
+# Sprog
+#Sys.setlocale("LC_TIME", "Danish")
+Sys.setlocale("LC_TIME", "English")
+
+# ******************************************************************************
+
 # Data
 data()
 
@@ -33,13 +39,15 @@ airquality$Month <- factor(airquality$Month)
 airquality$Weekday <- c(wday(paste(airquality$Day, airquality$Month, '1973', sep='-'), 
                              label=TRUE, abbr=FALSE))
 
+## Monthname
+airquality$Monthname <- month.abb[airquality$Month]
+
 ## NA
 ## Vi skal have fjernet NA værdier
 ## na.omit bruges til at fjerne rows med en eller flere NA værdier
 airquality <- na.omit(airquality)
 
 ## Vis data
-head(airquality, 10)
 
 # 1 ******************************************************************************
 
@@ -63,26 +71,26 @@ ggplot(data = airquality,
 ## Color
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = MonthName)) + 
+           col = Monthname)) + 
   geom_point()
 
 ## Size
 ggplot(data = airquality, 
     aes(x = Ozone, y = Temp, 
-        size = MonthName)) + 
+        size = Monthname)) + 
   geom_point()
 
 ## Shape og Color
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = MonthName, 
+           col = Monthname, 
            shape = Month)) + 
   geom_point()
 
 ## Shape, Color og Size
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = MonthName,
+           col = Monthname,
            size = Wind, 
            shape = Month)) + 
   geom_point()
@@ -97,8 +105,13 @@ ggplot(data = airquality,
 # Facet layer
 p <- ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = MonthName,
+           col = Monthname,
            shape = Month)) + 
+  geom_point()
+
+p <- ggplot(data = airquality, 
+            aes(x = Ozone, y = Temp,
+                col = Monthname)) + 
   geom_point()
 
 ## Opdel i rækker efter Måned (Month)
@@ -112,14 +125,14 @@ p + facet_grid(. ~ Weekday)
 # Statistics layer
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = MonthName)) +
+           col = Monthname)) +
   geom_point() +
   geom_smooth(se = T, method = lm)
 
 
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = MonthName)) +
+           col = Monthname)) +
   geom_point() +
   geom_smooth(se = T, method = lm, col = 'red')
 
@@ -127,7 +140,7 @@ ggplot(data = airquality,
 # coord_cartesian() - xlim =
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = MonthName)) +
+           col = Monthname)) +
   geom_point() +
   geom_smooth(se = F) +
   coord_cartesian(xlim = c(10, 20))
@@ -137,14 +150,14 @@ ggplot(data = airquality,
 # Theme layer
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = MonthName)) + 
+           col = Monthname)) + 
   geom_point() + 
   geom_smooth(se = F, method = lm) +
   theme(plot.background = element_rect(fill = 'lightblue'))
 
 # ******************************************************************************
 
-# labs
+# Titler - labs
 
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
@@ -152,4 +165,22 @@ ggplot(data = airquality,
   geom_point() + 
   geom_smooth(se = F, method = lm) +
   theme_light() +
-  labs(title = 'New York Air Quality Measurements', subtitle = 'May - September 1973')
+  labs(title = 'New York Air Quality Measurements', 
+       subtitle = 'May - September 1973',
+       caption = 'Data from ggplot standard',
+       x = 'Ozone level',
+       y = 'Temp in F')
+
+# Annotations
+ggplot(data = airquality, 
+       aes(x = Ozone, y = Temp, 
+           col = Monthname)) + 
+  geom_point() +
+  geom_text(aes(label = Monthname))
+
+
+ggplot(data = airquality, 
+       aes(x = Ozone, y = Temp, 
+           col = Monthname)) + 
+  geom_point() +
+  geom_label(aes(label = Monthname))
