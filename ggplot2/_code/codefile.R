@@ -148,12 +148,35 @@ ggplot(data = airquality,
 # 6 ******************************************************************************
 
 # Theme layer
+# theme_dark
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
            col = Monthname)) + 
   geom_point() + 
   geom_smooth(se = F, method = lm) +
-  theme(plot.background = element_rect(fill = 'lightblue'))
+  theme_dark()
+
+# theme_minima
+ggplot(data = airquality, 
+       aes(x = Ozone, y = Temp, 
+           col = Monthname)) + 
+  geom_point() + 
+  geom_smooth(se = F, method = lm) +
+  theme_minimal()
+
+# ******************************************************************************
+
+# 3 parts Themes
+install.packages("ggthemes")
+library(ggthemes)
+
+# Wall Street Journal theme
+ggplot(data = airquality, 
+       aes(x = Ozone, y = Temp, 
+           col = Monthname)) + 
+  geom_point() + 
+  geom_smooth(se = F, method = lm) +
+  theme_wsj()
 
 # ******************************************************************************
 
@@ -184,3 +207,22 @@ ggplot(data = airquality,
            col = Monthname)) + 
   geom_point() +
   geom_label(aes(label = Monthname))
+
+# ******************************************************************************
+
+# legend
+ggplot(data = airquality, 
+       aes(x = Ozone, y = Temp, 
+           col = Monthname)) + 
+  geom_point() + 
+  geom_smooth(se = F, method = lm) +
+  theme_minimal() +
+  theme(legend.position="bottom", legend.direction="horizontal")
+
+
+# ******************************************************************************
+
+
+# Gem Plot
+# Gem sides plot i working directory
+ggsave('plot.png', width = 5, height = 5)

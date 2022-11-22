@@ -195,8 +195,9 @@ ggplot(data = airquality,
 # Geometris
 *Nu sker der noget*, her vælger du hvilken plot "*type*" du vil vise.
 
-
 ---
+
+![bg right:45% 100%](../_image/geo_1.jpeg)
 
 ```r
 ggplot(data = airquality, 
@@ -206,6 +207,8 @@ ggplot(data = airquality,
 
 
 ---
+
+![bg right:38% 100%](../_image/geo-2.jpeg)
 
 # Tilføj Color til Geometric layer
 
@@ -217,6 +220,8 @@ ggplot(data = airquality,
 ```
 ---
 
+![bg right:38% 100%](../_image/geo_3.jpeg)
+
 # Tilføj Size til Geometric layer
 
 ```r
@@ -226,6 +231,8 @@ ggplot(data = airquality,
   geom_point()
 ```
 ---
+
+![bg right:38% 100%](../_image/geo_4.jpeg)
 
 # Tilføj Shape og Color til Geometric layer
 
@@ -238,6 +245,8 @@ ggplot(data = airquality,
 ```
 
 ---
+
+![bg right:38% 100%](../_image/geo_5.jpeg)
 
 # Shape, Color og Size til Geometric layer
 
@@ -291,6 +300,7 @@ p + facet_grid(. ~ Weekday)
 
 ---
 
+![bg right:45% 100%](../_image/stat_layer_1.jpeg)
 
 ```r
 ggplot(data = airquality, 
@@ -302,6 +312,8 @@ ggplot(data = airquality,
 
 ---
 
+![bg right:45% 100%](../_image/stat_layer_2.jpeg)
+
 ```r
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
@@ -312,7 +324,9 @@ ggplot(data = airquality,
 
 ---
 
-# coord_cartesian() - xlim =
+![bg right:45% 100%](../_image/carrtesian.jpeg)
+
+# coord_cartesian()
 
 ```r
 ggplot(data = airquality, 
@@ -334,6 +348,22 @@ ggplot(data = airquality,
 ![bg right:40% 65%](../_image/1.jpg)
 
 # Theme
+**ggplot2** kommer med 8 indbyggede *Themes*:
+
+- theme_gray()
+- theme_bw()
+- theme_linedraw()
+- theme_light()
+- theme_dark()
+- theme_minimal()
+- theme_classic()
+- theme_void()
+
+---
+
+![bg right:55% 100%](../_image/theme_dark.jpeg)
+
+# theme_dark()
 
 ```r
 ggplot(data = airquality, 
@@ -341,8 +371,75 @@ ggplot(data = airquality,
            col = Monthname)) + 
   geom_point() + 
   geom_smooth(se = F, method = lm) +
-  theme(plot.background = element_rect(fill = 'ligh
+  theme_dark()
 ```
+
+---
+
+![bg right:40% 100%](../_image/theme_minimal.jpeg)
+
+## Default Theme
+Default er **theme_gray()**, så hvis du vil bruge det behøver du ikke at specificere noget.
+
+Du kan ændre default *Theme* på denne måde - her til **theme_minimal()**
+
+```r
+theme_set(theme_minimal())
+```
+
+---
+
+# Theme pakker
+Ud over de indbyggede *Themes* er det muligt at anvende forskellige 3-parts *Themes*:
+
+- ggthemes
+- hrbrthemes
+- ggthemr
+- ggtech
+- ggdark
+
+Du skal installere den/de Themes pakker du vil anvende - her **ggthemes**
+
+```r
+install.packages("ggthemes")
+library(ggthemes)
+```
+
+---
+
+![bg right:40% 97%](../_image/Wall_Street_theme.jpeg)
+
+# Wall Street Journal theme
+
+```r
+ggplot(data = airquality, 
+       aes(x = Ozone, y = Temp, 
+           col = Monthname)) + 
+  geom_point() + 
+  geom_smooth(se = F, method = lm) +
+  theme_wsj()
+```
+
+---
+
+# Gem plot
+Du kan gemme det sidste plot du har oprettet med.
+**plot.png** bliver gemt i dit **Working Directory**
+
+```r
+ggsave('plot.png', width = 5, height = 5)
+```
+
+**ggsave** understøtter følgende filetyper:
+
+- jpeg
+- png
+- tiff
+- eps/ps
+- pdf
+- bmp
+- svg
+- wmf - *kun Windows*
 
 ---
 
