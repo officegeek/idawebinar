@@ -39,7 +39,7 @@ RStudio er Open Source og nok det mest brugte IDE til R programmering.
 Du kan hente den nyeste version her - [cran.rstudio.com](https://cran.rstudio.com)
 
 ## Online RStudio
-Det er også muligt at bruge RStude i en online version, se mere her - [https://rstudio.cloud](https://rstudio.cloud)
+Det er også muligt at bruge RStudio i en online version, se mere her - [https://rstudio.cloud](https://rstudio.cloud)
 
 Der findes både **gratis** og betaling planer.
 
