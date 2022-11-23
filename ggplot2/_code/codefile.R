@@ -193,20 +193,6 @@ ggplot(airquality, aes(Month, Temp)) +
        x = "Month",
        y = "Temp (deg. F)")
 
-# Annotations
-ggplot(data = airquality, 
-       aes(x = Ozone, y = Temp, 
-           col = Monthname)) + 
-  geom_point() +
-  geom_text(aes(label = Monthname))
-
-
-ggplot(data = airquality, 
-       aes(x = Ozone, y = Temp, 
-           col = Monthname)) + 
-  geom_point() +
-  geom_label(aes(label = Monthname))
-
 
 # Barplot
 ggplot(airquality, aes(Month, Temp)) +
@@ -233,21 +219,6 @@ ggplot(data = airquality,
 # Gem Plot
 # Gem sides plot i working directory
 ggsave('plot.png', width = 5, height = 5)
-
-
-# ******************************************************************************
-
-# Histogram
-ggplot(data=airquality, aes(x = Temp, 
-  fill = Month)) +
-  geom_histogram() 
-
-# Barplot
-ggplot(airquality, aes(Month, Temp)) +
-  geom_bar(stat = "summary", fun.y = "mean") +
-  labs(title = "Mean Temp by Month",
-       x = "Month",
-       y = "Temp (deg. F)")
 
 
 
