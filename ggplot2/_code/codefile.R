@@ -10,6 +10,12 @@ library(lubridate)
 
 # ******************************************************************************
 
+# Sprog
+#Sys.setlocale("LC_TIME", "Danish")
+Sys.setlocale("LC_TIME", "English")
+
+# ******************************************************************************
+
 # Data
 data()
 
@@ -24,22 +30,26 @@ str(airquality)
 
 # Tilpasning af data
 
-## Factor
-## Konverter Month til en Factor
-airquality$Month <- factor(airquality$Month)
+## NA
+## Vi skal have fjernet NA værdier
+## na.omit bruges til at fjerne rows med en eller flere NA værdier
+airquality <- na.omit(airquality)
+
+## Monthname
+airquality$Monthname <- month.abb[airquality$Month]
 
 ## Weekday
 ## Konverter dato(dag nr.) til ugedag
 airquality$Weekday <- c(wday(paste(airquality$Day, airquality$Month, '1973', sep='-'), 
                              label=TRUE, abbr=FALSE))
 
-## NA
-## Vi skal have fjernet NA værdier
-## na.omit bruges til at fjerne rows med en eller flere NA værdier
-airquality <- na.omit(airquality)
+## Factor
+## Konverter Month til en Factor
+airquality$Month <- factor(airquality$Month)
+
 
 ## Vis data
-head(airquality, 10)
+head(airquality, 1000)
 
 # 1 ******************************************************************************
 
@@ -63,42 +73,45 @@ ggplot(data = airquality,
 ## Color
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = Month)) + 
+           col = Monthname)) + 
   geom_point()
 
 ## Size
 ggplot(data = airquality, 
     aes(x = Ozone, y = Temp, 
-        size = Month)) + 
+        size = Monthname)) + 
   geom_point()
 
 ## Shape og Color
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = Month, 
+           col = Monthname, 
            shape = Month)) + 
   geom_point()
 
 ## Shape, Color og Size
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = Month,
+           col = Monthname,
            size = Wind, 
            shape = Month)) + 
   geom_point()
 
-## Histogram plot
-ggplot(data = airquality, 
-       aes(x = Ozone)) +
-  geom_histogram(binwidth = 5)
+# Histogram
+ggplot(data=airquality, aes(x = Temp, fill = Month)) +
+  geom_histogram() 
+
+
+# Barplot
+ggplot(airquality, aes(Month, Temp)) +
+  geom_bar(stat = "summary")
 
 # 4 ******************************************************************************
 
 # Facet layer
 p <- ggplot(data = airquality, 
-       aes(x = Ozone, y = Temp,
-           col = Month,
-           shape = Month)) + 
+            aes(x = Ozone, y = Temp,
+                col = Monthname)) + 
   geom_point()
 
 ## Opdel i rækker efter Måned (Month)
@@ -112,44 +125,101 @@ p + facet_grid(. ~ Weekday)
 # Statistics layer
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = Month)) +
+           col = Monthname)) +
   geom_point() +
   geom_smooth(se = T, method = lm)
 
 
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp,
-           col = Month)) +
+           col = Monthname)) +
   geom_point() +
   geom_smooth(se = T, method = lm, col = 'red')
-
-
-# coord_cartesian() - xlim =
-ggplot(data = airquality, 
-       aes(x = Ozone, y = Temp,
-           col = Month)) +
-  geom_point() +
-  geom_smooth(se = F) +
-  coord_cartesian(xlim = c(10, 20))
 
 # 6 ******************************************************************************
 
 # Theme layer
+# theme_dark
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
-           col = Month)) + 
+           col = Monthname)) + 
   geom_point() + 
   geom_smooth(se = F, method = lm) +
-  theme(plot.background = element_rect(fill = 'lightblue'))
+  theme_dark()
+
+# theme_minima
+ggplot(data = airquality, 
+       aes(x = Ozone, y = Temp, 
+           col = Monthname)) + 
+  geom_point() + 
+  geom_smooth(se = F, method = lm) +
+  theme_minimal()
 
 # ******************************************************************************
 
-# labs
+# 3 parts Themes
+install.packages("ggthemes")
+library(ggthemes)
 
+# Wall Street Journal theme
+ggplot(data = airquality, 
+       aes(x = Ozone, y = Temp, 
+           col = Monthname)) + 
+  geom_point() + 
+  geom_smooth(se = F, method = lm) +
+  theme_wsj()
+
+# ******************************************************************************
+
+# Titler - labs
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
            col = Month)) + 
   geom_point() + 
   geom_smooth(se = F, method = lm) +
   theme_light() +
-  labs(title = 'New York Air Quality Measurements', subtitle = 'May - September 1973')
+  labs(title = 'New York Air Quality Measurements', 
+       subtitle = 'May - September 1973',
+       caption = 'Data from ggplot standard',
+       x = 'Ozone level',
+       y = 'Temp in F')
+
+# Barplot
+ggplot(airquality, aes(Month, Temp)) +
+  geom_bar(stat = "summary") +
+  labs(title = "Mean Temp by Month",
+       subtitle = 'May - September 1973',
+       caption = 'Data from ggplot standard',
+       x = "Month",
+       y = "Temp (deg. F)")
+
+
+# Barplot
+ggplot(airquality, aes(Month, Temp)) +
+  geom_bar(stat = "summary") +
+  labs(title = "Mean Temp by Month",
+       x = "Month",
+       y = "Temp (deg. F)")
+
+# ******************************************************************************
+
+# legend
+ggplot(data = airquality, 
+       aes(x = Ozone, y = Temp, 
+           col = Monthname)) + 
+  geom_point() + 
+  geom_smooth(se = F, method = lm) +
+  theme_minimal() +
+  theme(legend.position="bottom", legend.direction="horizontal")
+
+
+# ******************************************************************************
+
+
+# Gem Plot
+# Gem sides plot i working directory
+ggsave('plot.png', width = 5, height = 5)
+
+
+
+
