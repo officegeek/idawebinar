@@ -30,24 +30,23 @@ str(airquality)
 
 # Tilpasning af data
 
-## Factor
-## Konverter Month til en Factor
-airquality$Month <- factor(airquality$Month)
-
-## Weekday
-## Konverter dato(dag nr.) til ugedag
-airquality$Weekday <- c(wday(paste(airquality$Day, airquality$Month, '1973', sep='-'), 
-                             label=TRUE, abbr=FALSE))
-
-## Monthname
-airquality$Monthname <- month.abb[airquality$Month]
-
 ## NA
 ## Vi skal have fjernet NA værdier
 ## na.omit bruges til at fjerne rows med en eller flere NA værdier
 airquality <- na.omit(airquality)
 
+## Monthname
+airquality$Monthname <- month.abb[airquality$Month]
+
+## Weekday
+airquality$Weekday <- c(weekdays(make_date(year = 1973, month = airquality$Month, day = airquality$Day)))
+
+## Factor
+## Konverter Month til en Factor
+airquality$Month <- factor(airquality$Month)
+
 ## Vis data
+head(airquality, 10)
 
 # 1 ******************************************************************************
 
@@ -92,7 +91,7 @@ ggplot(data = airquality,
        aes(x = Ozone, y = Temp, 
            col = Monthname,
            size = Wind, 
-           shape = Month)) + 
+           shape = Weekday)) + 
   geom_point()
 
 ## Histogram plot
