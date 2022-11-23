@@ -30,23 +30,28 @@ str(airquality)
 
 # Tilpasning af data
 
-## NA
-## Vi skal have fjernet NA værdier
-## na.omit bruges til at fjerne rows med en eller flere NA værdier
-airquality <- na.omit(airquality)
-
 ## Monthname
 airquality$Monthname <- month.abb[airquality$Month]
-
-## Weekday
-airquality$Weekday <- c(weekdays(make_date(year = 1973, month = airquality$Month, day = airquality$Day)))
 
 ## Factor
 ## Konverter Month til en Factor
 airquality$Month <- factor(airquality$Month)
 
+
+## Weekday
+## Konverter dato(dag nr.) til ugedag
+airquality$Weekday <- c(wday(paste(airquality$Day, airquality$Month, '1973', sep='-'), 
+                             label=TRUE, abbr=FALSE))
+
+
+
+## NA
+## Vi skal have fjernet NA værdier
+## na.omit bruges til at fjerne rows med en eller flere NA værdier
+airquality <- na.omit(airquality)
+
 ## Vis data
-head(airquality, 10)
+head(airquality, 1000)
 
 # 1 ******************************************************************************
 
@@ -91,7 +96,7 @@ ggplot(data = airquality,
        aes(x = Ozone, y = Temp, 
            col = Monthname,
            size = Wind, 
-           shape = Weekday)) + 
+           shape = Month)) + 
   geom_point()
 
 ## Histogram plot
@@ -225,3 +230,38 @@ ggplot(data = airquality,
 # Gem Plot
 # Gem sides plot i working directory
 ggsave('plot.png', width = 5, height = 5)
+
+
+
+
+
+# test
+ggplot(data = airquality, 
+       aes(y = Temp)) + 
+  geom_bar()
+
+
+# Histogram
+ggplot(data=airquality, aes(x=Temp)) +
+  geom_histogram()
+
+ggplot(data=airquality, aes(x = Temp, 
+  fill = Month)) +
+  geom_histogram() 
+
+# Barplot
+ggplot(airquality, aes(Month, Temp)) +
+  geom_bar(stat = "summary", fun.y = "mean") +
+  labs(title = "Mean Temp by Month",
+       x = "Month",
+       y = "Temp (deg. F)")
+
+ggplot(airquality, aes(Monthname, Temp)) +
+  geom_bar(stat = "summary", mean_se(Temp)) +
+  labs(title = "Mean Temp by Month",
+       x = "Month",
+       y = "Temp (deg. F)")
+
+airquality$Monthname <- factor(airquality$Monthname,levels = c("Jan", "Feb", "Mar", "Apr", "May"))
+
+
