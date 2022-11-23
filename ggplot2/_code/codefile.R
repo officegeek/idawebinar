@@ -30,25 +30,23 @@ str(airquality)
 
 # Tilpasning af data
 
+## NA
+## Vi skal have fjernet NA værdier
+## na.omit bruges til at fjerne rows med en eller flere NA værdier
+airquality <- na.omit(airquality)
+
 ## Monthname
 airquality$Monthname <- month.abb[airquality$Month]
-
-## Factor
-## Konverter Month til en Factor
-airquality$Month <- factor(airquality$Month)
-
 
 ## Weekday
 ## Konverter dato(dag nr.) til ugedag
 airquality$Weekday <- c(wday(paste(airquality$Day, airquality$Month, '1973', sep='-'), 
                              label=TRUE, abbr=FALSE))
 
+## Factor
+## Konverter Month til en Factor
+airquality$Month <- factor(airquality$Month)
 
-
-## NA
-## Vi skal have fjernet NA værdier
-## na.omit bruges til at fjerne rows med en eller flere NA værdier
-airquality <- na.omit(airquality)
 
 ## Vis data
 head(airquality, 1000)
@@ -99,20 +97,18 @@ ggplot(data = airquality,
            shape = Month)) + 
   geom_point()
 
-## Histogram plot
-ggplot(data = airquality, 
-       aes(x = Ozone)) +
-  geom_histogram(binwidth = 5)
+# Histogram
+ggplot(data=airquality, aes(x = Temp, fill = Month)) +
+  geom_histogram() 
+
+
+# Barplot
+ggplot(airquality, aes(Month, Temp)) +
+  geom_bar(stat = "summary")
 
 # 4 ******************************************************************************
 
 # Facet layer
-p <- ggplot(data = airquality, 
-       aes(x = Ozone, y = Temp,
-           col = Monthname,
-           shape = Month)) + 
-  geom_point()
-
 p <- ggplot(data = airquality, 
             aes(x = Ozone, y = Temp,
                 col = Monthname)) + 
@@ -139,15 +135,6 @@ ggplot(data = airquality,
            col = Monthname)) +
   geom_point() +
   geom_smooth(se = T, method = lm, col = 'red')
-
-
-# coord_cartesian() - xlim =
-ggplot(data = airquality, 
-       aes(x = Ozone, y = Temp,
-           col = Monthname)) +
-  geom_point() +
-  geom_smooth(se = F) +
-  coord_cartesian(xlim = c(10, 20))
 
 # 6 ******************************************************************************
 
@@ -185,7 +172,6 @@ ggplot(data = airquality,
 # ******************************************************************************
 
 # Titler - labs
-
 ggplot(data = airquality, 
        aes(x = Ozone, y = Temp, 
            col = Month)) + 
@@ -197,6 +183,15 @@ ggplot(data = airquality,
        caption = 'Data from ggplot standard',
        x = 'Ozone level',
        y = 'Temp in F')
+
+# Barplot
+ggplot(airquality, aes(Month, Temp)) +
+  geom_bar(stat = "summary") +
+  labs(title = "Mean Temp by Month",
+       subtitle = 'May - September 1973',
+       caption = 'Data from ggplot standard',
+       x = "Month",
+       y = "Temp (deg. F)")
 
 # Annotations
 ggplot(data = airquality, 
@@ -211,6 +206,14 @@ ggplot(data = airquality,
            col = Monthname)) + 
   geom_point() +
   geom_label(aes(label = Monthname))
+
+
+# Barplot
+ggplot(airquality, aes(Month, Temp)) +
+  geom_bar(stat = "summary") +
+  labs(title = "Mean Temp by Month",
+       x = "Month",
+       y = "Temp (deg. F)")
 
 # ******************************************************************************
 
@@ -232,19 +235,9 @@ ggplot(data = airquality,
 ggsave('plot.png', width = 5, height = 5)
 
 
-
-
-
-# test
-ggplot(data = airquality, 
-       aes(y = Temp)) + 
-  geom_bar()
-
+# ******************************************************************************
 
 # Histogram
-ggplot(data=airquality, aes(x=Temp)) +
-  geom_histogram()
-
 ggplot(data=airquality, aes(x = Temp, 
   fill = Month)) +
   geom_histogram() 
@@ -256,12 +249,6 @@ ggplot(airquality, aes(Month, Temp)) +
        x = "Month",
        y = "Temp (deg. F)")
 
-ggplot(airquality, aes(Monthname, Temp)) +
-  geom_bar(stat = "summary", mean_se(Temp)) +
-  labs(title = "Mean Temp by Month",
-       x = "Month",
-       y = "Temp (deg. F)")
 
-airquality$Monthname <- factor(airquality$Monthname,levels = c("Jan", "Feb", "Mar", "Apr", "May"))
 
 

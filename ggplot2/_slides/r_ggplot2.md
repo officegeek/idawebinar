@@ -13,7 +13,7 @@ markdown.marp.enableHtml
 
 ![bg 181% blur:6px](https://github.com/officegeek/image/raw/main/programming.jpeg)
 <!-- _color: white -->
-# Introduktion til datavisualisering i R med<!-- fit -->
+# Introduktion til datavisualisering i R med <!-- fit -->
 # ggplot2 <!-- fit -->
 ## Webinar 23-11-2022 - Tue Hellstern
 
@@ -44,36 +44,37 @@ markdown.marp.enableHtml
     -  Grammar of Graphics
 - Packages
 - Opret et plot ud fra *Grammar of Graphics*
+- Gem plot
 
 
 ---
 
 ![bg left:33% 255% blur:3px](https://github.com/officegeek/image/raw/main/programming.jpeg)
 
-# Hvem er I?
+# Hvem er I? <!-- fit --><!-- fit -->
 
-Erfaring med R
-    < 1 år
-    1 til 4 år
-    > 4 år
-Kender RStudio - Ja/Nej
-Har brugt ggplot2 - Ja/Nej
+# Spørgsmål <!-- fit -->
 
 ---
 
-![bg right:50% 100%](../_image/rstudio.jpg)
+![bg right:45% 100%](../_image/rstudio.jpg)
 
-# RStudio
+# RStudio - IDE
+- Lokalt
+- Online
+- https://posit.co/products/cloud/cloud
+
+**Ps**. Nyt navn - "**RStudio is now Posit**"
 
 ---
 
-![bg right:50% 60%](../_image/ggplot2-logo.png)
+![bg right:54% 60%](../_image/ggplot2-logo.png)
 
 # ggplot2
 
 ggplot2 er et system til oprettelse af plot/diagrammer, baseret på **The Grammar of Graphics**. 
 
-Du leverer dataene, fortæller **ggplot2**, hvordan variabler skal vises, hvilke typer plot der skal bruges, og **ggplot2** tager sig af detaljerne.
+Du leverer dataene, fortæller **ggplot2**, hvordan variabler skal vises, hvilke typer plot du vil vise og **ggplot2** tager sig af detaljerne.
 
 ---
 
@@ -99,9 +100,19 @@ Dette dataset viser daglige målinger af luftkvaliteten i New York. I perioden m
 
 ---
 
+![bg right:40% 65%](../_image/total.jpg)
+
 # Grammar of Graphics
 
-![bg right:40% 65%](../_image/total.jpg)
+```r
+ggplot (data = <DATA>) +
+    <GEOM_FUNCTION> (mapping = aes(<MAPPINGS>), 
+    stat = <STAT> , position = <POSITION>) + 
+    <COORDINATE_FUNCTION> +
+    <FACET_FUNCTION> +
+    <SCALE_FUNCTION> +
+    <THEME_FUNCTION>
+```
 
 ---
 
@@ -119,49 +130,10 @@ ggplot(data = airquality)
 # Data tilpasning
 Typisk kan data ikke bruges i den form du importere dem, hvilket også gælder her. Vi skal have tilpasset følgende:
 
-- Konverter **Month** til en *Factor*
-- Tilføj en kolonne med ugedag (*Weekday*)
-- Tilføj en kolonne med månedsnavn (*Monthname*)
 - Fjern tomme værdier (*NA*)
-
----
-
-![bg right:49% 100%](../_image/str.jpg)
-
-# Datatyper
-Du kan bruge denne R kommando til at se hvilke data typer dine data har:
-
-```r
-str(airquality)
-```
----
-
-### Factor - Month
-Vi vil gerne have konverteret kolonnen **Month** til en *Factor*
-
-```r
-airquality$Month <- factor(airquality$Month)
-```
-**Factor** er *værdier*, du kan bruge til at kategorisere dine dataene og gemme dem som niveauer. **Factor** er nyttige i de kolonner, som har et begrænset antal unikke værdier. For eksempel "*Mand*, "*Kvinde*" og *True*, *False* osv. **Factor** bruges meget i dataanalyse til statistisk modellering. En **Factor** kan være både *strenge* og *heltal*.
-
----
-
-# Tilføj ugedag
-Jeg vil gerne have mulighed for at gruppere efter ugedag. Problemet er at datasættet "*kun*" indeholder **Day** og **Month**. Året kender vi - **1973**.
-
-Det kan løses med lidt R programmering
-
-```r
-airquality$Weekday <- c(wday(paste(airquality$Day, airquality$Month, '1973', sep='-'), label=TRUE, abbr=FALSE))
-```
-
----
-
-# Tilføj månedsnavn
-
-```r
-airquality$Monthname <- month.abb[airquality$Month]
-```
+- Tilføj en kolonne med månedsnavn (*Monthname*)
+- Tilføj en kolonne med ugedag (*Weekday*)
+- Konverter *Month* til en *Factor*
 
 ---
 
@@ -175,6 +147,45 @@ airquality <- na.omit(airquality)
 
 ---
 
+# Tilføj månedsnavn
+
+```r
+airquality$Monthname <- month.abb[airquality$Month]
+```
+
+---
+
+# Tilføj ugedag
+Jeg vil gerne have mulighed for at gruppere efter ugedag. Problemet er at datasættet "*kun*" indeholder **Day** og **Month**. Året kender vi - **1973**.
+
+Det kan løses med lidt R programmering
+
+```r
+airquality$Weekday <- c(wday(paste(airquality$Day, airquality$Month, '1973', sep='-'), 
+                             label=TRUE, abbr=FALSE))
+```
+
+---
+
+![bg right:49% 100%](../_image/str.jpg)
+
+# Datatyper
+Du kan bruge denne R kommando til at se hvilke data typer dine data har:
+
+```r
+str(airquality)
+```
+---
+
+# Factor - Month
+Vi vil gerne have konverteret kolonnen **Month** til en *Factor*
+
+```r
+airquality$Month <- factor(airquality$Month)
+```
+**Factor** er *værdier*, du kan bruge til at kategorisere dine dataene og gemme dem som niveauer. **Factor** er nyttige i de kolonner, som har et begrænset antal unikke værdier. For eksempel "*Mand*, "*Kvinde*" og *True*, *False* osv. **Factor** bruges meget i dataanalyse til statistisk modellering. En **Factor** kan være både *strenge* og *heltal*.
+
+---
 
 ![bg right:40% 65%](../_image/6.jpg)
 
@@ -324,24 +335,10 @@ ggplot(data = airquality,
 
 ---
 
-![bg right:45% 100%](../_image/carrtesian.jpeg)
-
-# coord_cartesian()
-
-```r
-ggplot(data = airquality, 
-       aes(x = Ozone, y = Temp,
-           col = Monthname)) +
-  geom_point() +
-  geom_smooth(se = F) +
-  coord_cartesian(xlim = c(10, 20))
-```
-
----
-
 ![bg right:40% 65%](../_image/2.jpg)
 
 # Coordinates
+Normalt vil du bruge standard koordinatsystemet - *The Cartesian system*
 
 ---
 
@@ -451,3 +448,4 @@ ggsave('plot.png', width = 5, height = 5)
 - [www.rdocumentation.org/packages/ggplot2](https://www.rdocumentation.org/packages/ggplot2)
 - [R Graphics Cookbook](https://r-graphics.org/)
 - [Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/main/data-visualization.pdf)
+- [posit.co](https://posit.co)
