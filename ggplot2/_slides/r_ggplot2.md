@@ -277,9 +277,8 @@ ggplot(data = airquality,
 # Facets
 ```r
 p <- ggplot(data = airquality, 
-       aes(x = Ozone, y = Temp,
-           col = Month,
-           shape = Month)) + 
+            aes(x = Ozone, y = Temp,
+                col = Monthname)) + 
   geom_point()
 ```
 
