@@ -14,7 +14,7 @@ markdown.marp.enableHtml
 ![bg 181% blur:6px](https://github.com/officegeek/image/raw/main/programming.jpeg)
 <!-- _color: white -->
 # Introduktion til Microsoft Power Platform <!-- fit -->
-## Webinar 07-12-2022 - Tue Hellstern
+## Webinar Tue Hellstern
 
 ---
 
